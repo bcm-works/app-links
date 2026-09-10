@@ -2,10 +2,11 @@
 .env.*
 !.env.sample
 
-volume-links/*
-volume-links/**
-!volume-links/.gitkeep
+storage/app/*
+storage/app/**
+!storage/app/.gitkeep
 
-volume-search/*
-volume-search/**
-!volume-search/.gitkeep
+storage/search/*
+storage/search/**
+!storage/search/.gitkeep
+

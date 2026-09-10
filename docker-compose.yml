@@ -7,9 +7,9 @@ services:
     image: "ghcr.io/karakeep-app/karakeep:release"
     restart: "no"
     volumes:
-      - ./volume-links:/data
+      - ./storage/app:/data
     ports:
-      - "${PORT:-3333}:3000"
+      - "${KARAKEEP_PORT:-3333}:3000"
     networks:
       - bcm-links-network
     env_file:
@@ -44,7 +44,7 @@ services:
     environment:
       MEILI_NO_ANALYTICS: "true"
     volumes:
-      - ./volume-search:/meili_data
+      - ./storage/search:/meili_data
 
 networks:
 

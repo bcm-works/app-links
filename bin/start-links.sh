@@ -3,7 +3,7 @@
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO"
 
-mkdir -p "$REPO/volume-"{links,search}
+mkdir -p "$REPO/storage/"{app,search}
 
 [ ! -f .env ] && cp .env.sample .env
 source .env
