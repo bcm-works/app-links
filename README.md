@@ -7,26 +7,24 @@ This directory contains a self-hosted version of the [Karakeep](https://karakeep
 Start the local server:
 
 ```bash
-just links-start
+bash ./start-links.sh
 ```
 
 Stop the local server:
 
 ```bash
-just links-stop
+bash ./stop-links.sh
 ```
 
-## Online Infrastructure
+## Infrastructure and Deployment
 
-### Deployment
+### GCP
 
 App builds can be deployed to GCP manually in GitHub Actions via [deploy_links_app.yml](../../.github/workflows/deploy_links_app.yml)
 
 Infrastructure configuration can be deployed to GCP manually in GitHub Actions via [deploy_links_infra.yml](../../.github/workflows/deploy_links_infra.yml)
 
 Links infrastructure is deployed to `asia-southeast1` due to limitations around region availability of some required GCP features.
-
-### Infrastructure Setup
 
 Login to GCP and enable the following APIs:
 
@@ -69,6 +67,6 @@ Optional:
 - `GCP_DNS_ZONE` - eg `example-domain-com`
 - `GCP_DNS_NAME` - eg `example-domain.com.`
 
-### Storage
+#### Storage
 
 The top-level named volumes in `src/links/.infra/docker-compose.yml` are handled by [Cloud Run Compose](https://docs.cloud.google.com/run/docs/deploy-run-compose) as [Cloud Storage Volumes](https://docs.cloud.google.com/run/docs/configuring/services/cloud-storage-volume-mounts).
