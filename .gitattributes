@@ -1,7 +1,7 @@
 # GitHub repo linguist configuration
 
 .github/** -linguist-detectable
-.zed/** -linguist-detectable
+bin/** -linguist-detectable
 .env.* -linguist-detectable
 .* -linguist-detectable
 .*.* -linguist-detectable
