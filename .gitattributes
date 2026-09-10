@@ -1,0 +1,12 @@
+# GitHub repo linguist configuration
+
+.github/** -linguist-detectable
+.zed/** -linguist-detectable
+.env.* -linguist-detectable
+.* -linguist-detectable
+.*.* -linguist-detectable
+opencode.json -linguist-detectable
+
+docs/** linguist-documentation
+
+docker-compose.yml linguist-language=YAML
