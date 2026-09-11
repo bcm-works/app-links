@@ -1,6 +1,32 @@
 ## Infrastructure and Deployment
 
-This project uses [Railway](https://railway.com/) for online infrastructure and deployment
+This project uses [Railway](https://railway.com/) for online infrastructure and deployment.
+
+## Estimated Ongoing Costs
+
+From Railway's Dashboard Agent:
+
+```
+Based on your project configuration, here's your estimated monthly cost:
+
+Plan: Hobby tier
+Included monthly credit: $5
+
+Services & Configuration:
+
+bcm-links-web (1 replica, 1 vCPU, 1GB RAM) – EU West region
+bcm-links-search (1 replica, 1 vCPU, 1GB RAM) – EU West region
+bcm-links-browser (1 replica, 1 vCPU, 1GB RAM) – EU West region
+Storage: 2 volumes, 1GB total
+Cost Breakdown:
+
+Compute: 3 services × 1 replica × $6.50/month per replica = $19.50
+Volumes: 1GB storage × $0.25/GB/month = $0.25
+Subtotal: $19.75
+Less included credit: -$5.00
+Network egress: Variable (metered separately, not included in plan ceiling)
+Estimated monthly charge: ~$14.75 (before network egress)
+```
 
 ## Initial setup
 
