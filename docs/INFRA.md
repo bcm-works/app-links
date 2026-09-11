@@ -4,7 +4,7 @@ This project uses [Railway](https://railway.com/) for online infrastructure and 
 
 ## Estimated Ongoing Costs
 
-From Railway's Dashboard Agent:
+From Railway's Dashboard Agent (I would assume the costs are in USD):
 
 ```
 Based on your project configuration, here's your estimated monthly cost:
