@@ -5,7 +5,7 @@ This directory contains a customised self-hosted version of the [Karakeep](https
 Summary of the configuration changes here:
 
 - User signups via the app are disabled
-- The single app user can be created with [bin/create-user.sh](bin/create-user.sh)
+- The single app user can be created manually by temporarily setting `DISABLE_SIGNUPS` to `false`
 - Analytics are disabled
 - The Docker Compose config has been altered to support the infrastructure provider's requirements
 
@@ -16,7 +16,7 @@ Summary of the configuration changes here:
 - The latest stable version of [Docker](https://www.docker.com/) needs to be installed and running
 - Copy [.env.sample](.env.sample) to `.env`
 - Edit the Git Ignored `.env` file with suitable values
-- Create the single app user with `bash ./bin/create-user.sh`
+- Follow the steps in `.env` to setup the app user via the `DISABLE_SIGNUPS` variable value
 
 ### Commands
 

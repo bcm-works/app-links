@@ -1,5 +1,5 @@
 #
-# Local-only Docker Compose override to persist data volumes in the local 'storage' dir.
+# Docker Compose - Local-only overrides.
 #
 
 services:
