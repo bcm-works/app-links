@@ -6,6 +6,8 @@ services:
 
   bcm-links-web:
     restart: "no"
+    environment:
+      PORT: "${PORT:-3000}"
     volumes:
       - ./storage/app:/data
 

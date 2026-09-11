@@ -14,11 +14,12 @@ services:
       - data:/data
     ports:
       # Railway ignores this mapping; generate a public domain for port 3000.
-      - "${KARAKEEP_PORT:-3333}:3000"
+      - "${KARAKEEP_PORT:-3333}:${PORT:-3000}"
     env_file:
       - .env
     environment:
       PORT: "3000"
+      HOSTNAME: "0.0.0.0"
       DATA_DIR: /data
       NEXTAUTH_SECRET: "${NEXTAUTH_SECRET}"
       NEXTAUTH_URL: "${NEXTAUTH_URL:-http://localhost:${KARAKEEP_PORT:-3333}}"

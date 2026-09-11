@@ -23,7 +23,7 @@ In the **Variables** tab, add/edit:
 
 | Key                  | Value                                          |
 |----------------------|------------------------------------------------|
-| `PORT`               | `3000`                                         |
+| `PORT`               | `3000` (pinned; must match the domain target port below) |
 | `DATA_DIR`           | `/data`                                        |
 | `NEXTAUTH_URL`       | `https://${{bcm-links-web.RAILWAY_PUBLIC_DOMAIN}}` (after generating the domain, add it here, then deploy again) |
 | `NEXTAUTH_SECRET`    | (refer to notes in `.env.sample`) |
@@ -32,6 +32,12 @@ In the **Variables** tab, add/edit:
 | `BROWSER_WEB_URL`    | `http://${{bcm-links-browser.RAILWAY_PRIVATE_DOMAIN}}:9222` |
 | `OPENAI_API_KEY`     | optional, enables AI tagging                   |
 | `DISABLE_SIGNUPS`    | `true` (Set to `false` only for the minute it takes to run the initial-user bootstrap below, then back to `true`) |
+
+Pinned port: the app always listens on `3000` (`PORT: "3000"` in
+`compose.yml`). On Railway set `PORT=3000` in Variables AND set the public
+domain target port to `3000` (numeric). Both sides must match or Railway
+returns `502 Application failed to respond`.
+`HOSTNAME=0.0.0.0` is already set in `compose.yml`; do not change it.
 
 Note that the `${{...}}` syntax is to use Railway reference variables, and they will stay in sync
 automatically. If service names differ, adjust the prefix values.
@@ -47,15 +53,41 @@ In the **Variables** tab, add/edit:
 | `MEILI_MASTER_KEY`  | (refer to notes in `.env.sample`) |
 | `MEILI_NO_ANALYTICS`| `true`                       |
 
+## Volumes (required, not created by compose import)
+
+Railway does not create volumes from `compose.yml`. Create them manually,
+otherwise `/data` is ephemeral (users/bookmarks lost on redeploy) and the app
+can crash on startup:
+
+- Service `bcm-links-web`: **Settings > Volumes > Add Volume**, mount path
+  `/data`.
+- Service `bcm-links-search`: **Settings > Volumes > Add Volume**, mount path
+  `/meili_data`.
+
 ## Networking
 
 - Private networking is automatic: services reach each other at
   `<service-name>.railway.internal:<port>` (no `ports:` mapping needed).
 - Public access: on `bcm-links-web` only, **Settings > Networking >
-  Generate Domain** for container port `3000`. This replaces the local
-  `"${KARAKEEP_PORT:-3333}:3000"` port mapping.
+  Generate Domain** for container port `3000` (numeric target port). This
+  replaces the local `"${KARAKEEP_PORT:-3333}:3000"` port mapping.
 - After generating the domain, set `NEXTAUTH_URL` to the public URL
-  (e.g. `https://xxx.up.railway.app`).
+  (e.g. `https://xxx.up.railway.app`, no trailing slash), then redeploy.
+
+## Troubleshooting `502 Application failed to respond`
+
+Railway returns 502 when its edge proxy cannot reach the web container. Check
+in this order:
+
+1. **Target port**: `bcm-links-web` **Settings > Networking** target port
+   must be the number `3000`, and the `PORT` variable must also be `3000`.
+   Any other combination gives 502. Fix: set both to `3000`, redeploy.
+2. **Deploy logs**: `bcm-links-web` must show Next.js `Ready` on port `3000`.
+   Missing `NEXTAUTH_SECRET` / `MEILI_MASTER_KEY` or an unmounted `/data`
+   volume crashes startup and surfaces as 502.
+3. **`NEXTAUTH_URL`**: must exactly equal the public URL (`https://...`, no
+   trailing slash). A mismatch does not cause 502, but causes auth redirects
+   to fail after the page loads.
 
 ## Verify
 
