@@ -62,6 +62,7 @@ Set these in each service's **Variables** tab (Raw Editor accepts
 | `MEILI_MASTER_KEY`   | `${{bcm-links-search.MEILI_MASTER_KEY}}` (reference variable: same key on both services) |
 | `BROWSER_WEB_URL`    | `http://${{bcm-links-browser.RAILWAY_PRIVATE_DOMAIN}}:9222` |
 | `OPENAI_API_KEY`     | optional, enables AI tagging                   |
+| `DISABLE_SIGNUPS`    | `true` (single-user lock; same default as `compose.yml`. Set to `false` only for the minute it takes to run the initial-user bootstrap below, then back to `true`) |
 
 `${{...}}` entries are Railway reference variables; they stay in sync
 automatically. If service names differ, adjust the prefixes.
@@ -92,7 +93,14 @@ No variables needed.
 ## Verify
 
 1. Check **Deploy Logs** per service.
-2. Open the web service's public domain; create the first (admin) account.
+2. Create the one admin account (single-user bootstrap). On Railway the
+   web container has no DB-file access, so the bootstrap goes through the
+   signup API:
+   1. Set `DISABLE_SIGNUPS=false` on `bcm-links-web` and redeploy.
+   2. Run `bash bin/create-user.sh --url https://<public-domain>`
+      (prompts for email/password, refuses on duplicate email).
+   3. Set `DISABLE_SIGNUPS=true` and redeploy. The first user is admin;
+      with signups locked, no second user can be created.
 3. Bookmark a link and confirm crawling (browser) and search (meilisearch)
    work. `depends_on` has no Railway equivalent; on cold start the web
    service retries connections until search/browser are ready.

@@ -28,7 +28,11 @@ services:
       MEILI_MASTER_KEY: "${MEILI_MASTER_KEY}"
       BROWSER_WEB_URL: "${BROWSER_WEB_URL:-http://bcm-links-browser:9222}"
       OPENAI_API_KEY: "${OPENAI_API_KEY}"
-      DISABLE_SIGNUPS: "false"
+      # Single-user instance: signups are locked by default. The one admin
+      # account is created via bin/create-user.sh, which briefly lifts this
+      # to "false" for the bootstrap signup only. Never commit "false" here.
+      # (Railway: set the same DISABLE_SIGNUPS variable per docs/INFRA.md.)
+      DISABLE_SIGNUPS: "${DISABLE_SIGNUPS:-true}"
 
   bcm-links-browser:
     # Railway service: "bcm-links-browser". NOTE: Railway private networking
