@@ -28,7 +28,7 @@ services:
       MEILI_MASTER_KEY: "${MEILI_MASTER_KEY}"
       BROWSER_WEB_URL: "${BROWSER_WEB_URL:-http://bcm-links-browser:9222}"
       OPENAI_API_KEY: "${OPENAI_API_KEY}"
-      DISABLE_SIGNUPS: "${KARAKEEP_DISABLE_SIGNUPS:-false}"
+      DISABLE_SIGNUPS: "false"
 
   bcm-links-browser:
     # Railway service: "bcm-links-browser". NOTE: Railway private networking

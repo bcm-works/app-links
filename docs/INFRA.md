@@ -61,7 +61,6 @@ Set these in each service's **Variables** tab (Raw Editor accepts
 | `MEILI_ADDR`         | `http://${{bcm-links-search.RAILWAY_PRIVATE_DOMAIN}}:7700` |
 | `MEILI_MASTER_KEY`   | `${{bcm-links-search.MEILI_MASTER_KEY}}` (reference variable: same key on both services) |
 | `BROWSER_WEB_URL`    | `http://${{bcm-links-browser.RAILWAY_PRIVATE_DOMAIN}}:9222` |
-| `DISABLE_SIGNUPS`    | `false` (or `true`; mirrors `KARAKEEP_DISABLE_SIGNUPS` locally) |
 | `OPENAI_API_KEY`     | optional, enables AI tagging                   |
 
 `${{...}}` entries are Railway reference variables; they stay in sync
