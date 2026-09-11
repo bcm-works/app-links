@@ -6,6 +6,8 @@ cd "$REPO"
 
 mkdir -p "$REPO/storage/"{app,search}
 
+bash "$REPO/bin/stop.sh"
+
 [ ! -f .env ] && cp .env.sample .env
 source .env
 

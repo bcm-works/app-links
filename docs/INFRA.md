@@ -15,12 +15,9 @@ Railway (hard cutoff 2026-12-01, new services cannot opt in).
 ## Option A: Compose import (recommended)
 
 1. Create an **Empty project** in the Railway dashboard.
-2. Drag & drop **only `compose.yml`** onto the project canvas
-   (`docker-compose.local.yml` is local-only and must NOT be imported).
-   Railway auto-creates the three services and the two named volumes (`data`
-   mounted at `/data`, `meilisearch` mounted at `/meili_data`).
-3. Apply the adjustments from "Per-service settings" and "Variables" below
-   (notably the browser image swap), then deploy.
+2. Drag & drop **only `compose.yml`** onto the project canvas, this will create the three services and the two named volumes.
+3. Apply the adjustments from "Per-service settings" and "Variables" below.
+4. Deploy the service.
 
 ## Option B: Manual setup
 

@@ -1,13 +1,18 @@
 #
-# Local-only override to persist data volumes in the local 'storage' dir.
+# Local-only Docker Compose override to persist data volumes in the local 'storage' dir.
 #
 
 services:
 
   bcm-links-web:
+    restart: "no"
     volumes:
       - ./storage/app:/data
 
+  bcm-links-browser:
+    restart: "no"
+
   bcm-links-search:
+    restart: "no"
     volumes:
       - ./storage/search:/meili_data
