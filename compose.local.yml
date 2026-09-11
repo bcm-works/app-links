@@ -1,0 +1,13 @@
+#
+# Local-only override to persist data volumes in the local 'storage' dir.
+#
+
+services:
+
+  bcm-links-web:
+    volumes:
+      - ./storage/app:/data
+
+  bcm-links-search:
+    volumes:
+      - ./storage/search:/meili_data

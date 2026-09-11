@@ -1,0 +1,88 @@
+name: bcm-links
+
+# Shared config for local Docker Compose and Railway infra.
+#
+# Local: `bash ./bin/start.sh` (reads .env, see .env.sample).
+# Railway: import this file (drag & drop it onto the project canvas) or
+#   create the three services manually as described in docs/INFRA.md.
+#   The same image tags and env var names are used in both places; only
+#   the *values* of MEILI_ADDR, BROWSER_WEB_URL and NEXTAUTH_URL differ
+#   (local hostnames vs Railway private/public domains).
+#
+# Railway mapping (https://docs.railway.com/guides/docker-compose):
+#   services:/image: -> Railway service from a Docker image
+#   ports:           -> public domain (web, port 3000); nothing for the rest
+#   volumes:         -> Railway Volumes (same mount paths: /data, /meili_data)
+#   environment:     -> Railway Variables (kept complete here on purpose;
+#                     env_file is NOT available on Railway)
+#   networks:        -> intentionally omitted; Railway networking is automatic
+#                     and local service-name DNS works on the default network
+
+services:
+
+  bcm-links-web:
+    # Railway service: "bcm-links-web", public domain on container port 3000,
+    # Railway volume mounted at /data.
+    image: "ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}"
+    restart: unless-stopped
+    volumes:
+      - data:/data
+    ports:
+      # Railway ignores this mapping; generate a public domain for port 3000.
+      - "${KARAKEEP_PORT:-3333}:3000"
+    env_file:
+      - .env
+    environment:
+      PORT: "3000"
+      DATA_DIR: /data
+      NEXTAUTH_SECRET: "${NEXTAUTH_SECRET}"
+      NEXTAUTH_URL: "${NEXTAUTH_URL:-http://localhost:${KARAKEEP_PORT:-3333}}"
+      # Overridable so Railway can point at private-network hostnames, e.g.
+      # http://bcm-links-search.railway.internal:7700 (see docs/INFRA.md).
+      MEILI_ADDR: "${MEILI_ADDR:-http://bcm-links-search:7700}"
+      MEILI_MASTER_KEY: "${MEILI_MASTER_KEY}"
+      BROWSER_WEB_URL: "${BROWSER_WEB_URL:-http://bcm-links-browser:9222}"
+      OPENAI_API_KEY: "${OPENAI_API_KEY}"
+      DISABLE_SIGNUPS: "${KARAKEEP_DISABLE_SIGNUPS:-false}"
+
+  bcm-links-browser:
+    # Railway service: "bcm-links-browser". NOTE: Railway private networking
+    # needs an IPv6-capable Chrome, so Railway uses
+    #   zenika/alpine-chrome:123
+    # with start command:
+    #   chromium-browser --headless --no-sandbox --disable-gpu
+    #     --disable-dev-shm-usage --remote-debugging-address=::
+    #     --remote-debugging-port=9222 --hide-scrollbars
+    # (see docs/RAILWAY.md). No volume, no public domain.
+    image: ghcr.io/karakeep-app/karakeep-chrome:release
+    restart: unless-stopped
+    init: true
+    command:
+      - --disable-gpu
+      - --disable-dev-shm-usage
+      - --hide-scrollbars
+      - --disable-blink-features=AutomationControlled
+      - --window-size=1440,900
+
+  bcm-links-search:
+    # Railway service: "bcm-links-search". Railway volume mounted at
+    # /meili_data. No public domain (private network only).
+    image: getmeili/meilisearch:${MEILI_VERSION:-v1.41.0}
+    restart: unless-stopped
+    environment:
+      MEILI_NO_ANALYTICS: "true"
+      MEILI_ENV: production
+      # Dual-stack bind: required so Karakeep can reach Meilisearch over
+      # Railway private networking (IPv6); also fine for local Docker.
+      MEILI_HTTP_ADDR: "[::]:7700"
+      MEILI_MASTER_KEY: "${MEILI_MASTER_KEY}"
+    volumes:
+      - meilisearch:/meili_data
+
+volumes:
+
+  # Local: Docker-managed volumes (replaces the old ./storage bind mounts;
+  # see README for the one-time migration). Railway: a Railway Volume per
+  # named volume, with the same mount paths as below.
+  data:
+  meilisearch:
