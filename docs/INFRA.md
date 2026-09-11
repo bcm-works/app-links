@@ -25,7 +25,7 @@ In the **Variables** tab, add/edit:
 |----------------------|------------------------------------------------|
 | `PORT`               | `3000`                                         |
 | `DATA_DIR`           | `/data`                                        |
-| `NEXTAUTH_URL`       | `https://${{bcm-links-web.RAILWAY_PUBLIC_DOMAIN}}` (after generating the domain, add it here) |
+| `NEXTAUTH_URL`       | `https://${{bcm-links-web.RAILWAY_PUBLIC_DOMAIN}}` (after generating the domain, add it here, then deploy again) |
 | `NEXTAUTH_SECRET`    | (refer to notes in `.env.sample`) |
 | `MEILI_ADDR`         | `http://${{bcm-links-search.RAILWAY_PRIVATE_DOMAIN}}:7700` |
 | `MEILI_MASTER_KEY`   | `${{bcm-links-search.MEILI_MASTER_KEY}}` |
