@@ -62,6 +62,7 @@ In the **Variables** tab, add/edit:
 | `BROWSER_WEB_URL`    | `http://${{bcm-links-browser.RAILWAY_PRIVATE_DOMAIN}}:9222` |
 | `OPENAI_API_KEY`     | (optional, enables AI tagging)                   |
 | `DISABLE_SIGNUPS`    | `true` (set to `false` temporarily to create the initial user) |
+| `SEARCH_NUM_WORKERS`    | `5` |
 
 ## Service - bcm-links-search
 
