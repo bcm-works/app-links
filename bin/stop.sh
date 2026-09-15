@@ -5,5 +5,4 @@ cd "$REPO"
 
 docker compose \
   --file "$REPO/compose.yml" \
-  --file "$REPO/compose.local.yml" \
   down

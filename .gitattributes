@@ -10,5 +10,3 @@ opencode.json -linguist-detectable
 docs/** linguist-documentation
 
 compose.yml linguist-language=YAML
-compose.yml linguist-language=YAML
-compose.local.yml linguist-language=YAML

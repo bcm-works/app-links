@@ -1,13 +1,12 @@
 # Links Service
 
-This directory contains a customised self-hosted version of the [Karakeep](https://karakeep.app/) bookmarking service.
+This directory contains a self-hosted [linkding](https://linkding.link/) bookmark service.
 
-Summary of the configuration changes here:
+The local Docker setup uses linkding's official Compose configuration with the
+`latest-plus` image, which includes support for local HTML snapshots.
 
-- User signups via the app are disabled
-- The single app user can be created manually by temporarily setting `DISABLE_SIGNUPS` to `false`
-- Analytics are disabled
-- The Docker Compose config has been altered to support the infrastructure provider's requirements
+Linkding stores its SQLite database and bookmark data in `storage/linkding`.
+Existing Karakeep data in `storage/app` and `storage/search` is left untouched.
 
 ## Local Environment
 
@@ -15,12 +14,14 @@ Summary of the configuration changes here:
 
 - The latest stable version of [Docker](https://www.docker.com/) needs to be installed and running
 - Copy [.env.sample](.env.sample) to `.env`
-- Edit the Git Ignored `.env` file with suitable values
-- Follow the steps in `.env` to setup the app user via the `DISABLE_SIGNUPS` variable value
+- Edit the Git Ignored `.env` file with suitable values, including
+  `LD_SUPERUSER_NAME` and `LD_SUPERUSER_PASSWORD` for the initial user
+- Keep the initial user values in `.env` for the first start; linkding ignores
+  them after that user already exists
 
 ### Commands
 
-Start the app containers:
+Start the app container:
 
 ```bash
 bash ./bin/start.sh
@@ -32,6 +33,7 @@ Stop the app containers:
 bash ./bin/stop.sh
 ```
 
-## Infrastructure and Deployment
+The service is available at `http://localhost:9090/` by default. The host port
+can be changed with `LD_HOST_PORT` in `.env`.
 
-Refer to [docs/INFRA.md](docs/INFRA.md).
+The setup follows the [official linkding Docker installation](https://linkding.link/installation/#using-docker).

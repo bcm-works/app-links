@@ -2,11 +2,5 @@
 .env.*
 !.env.sample
 
-storage/app/*
-storage/app/**
-!storage/app/.gitkeep
-
-storage/search/*
-storage/search/**
-!storage/search/.gitkeep
-
+storage/*
+!storage/.gitkeep

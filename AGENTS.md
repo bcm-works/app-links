@@ -17,4 +17,4 @@
 Fetch information from the following websites to clarify suggested changes:
 
 - Docker documentation: https://docs.docker.com/
-- Karakeep documentation: https://docs.karakeep.app/
+- Linkding documentation: https://linkding.link/installation/#using-docker
