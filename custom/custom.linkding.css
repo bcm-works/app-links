@@ -1,0 +1,50 @@
+/*
+
+Linkding custom CSS
+  - Optional app design customisations
+  - Manual setup process
+    - First setup the infra/local environment as detailed in /README.md
+    - Then login to the app with your credentials
+    - Go to Settings > General > Custom CSS
+    - Add the content of this file to that form field
+    - Click the Save button below the field
+
+*/
+
+/* Customise colour scheme and fonts */
+
+:root {
+  --html-font-size: 22px;
+
+  --body-color: #000000;
+  --text-color: #FFFFFF;
+  --primary-color: #23C5B0;
+
+  --primary-color-highlight: var(--primary-color);
+  --link-color: var(--primary-color);
+  --secondary-link-color: var(--primary-color);
+  --bookmark-title-color: var(--primary-color);
+
+  --btn-primary-bg-color: var(--primary-color);
+  --btn-icon-color: var(--primary-color);
+  --btn-primary-text-color: var(--body-color);
+
+  --checkbox-checked-bg-color: var(--primary-color);
+  --checkbox-icon-color: var(--body-color);
+  --focus-outline: 2px solid var(--primary-color);
+
+  --contrast-text-color: var(--body-color);
+  --secondary-text-color: #D1D5DB;
+  --input-hint-color: #D1D5DB;
+  --tertiary-text-color: #9CA3AF;
+}
+
+/* Alter the App Name content in the header */
+
+header .app-name {
+  font-size: 0px;
+}
+header .app-name::after {
+  content: "Links";
+  font-size: var(--font-size-lg);
+}

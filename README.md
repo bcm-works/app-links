@@ -33,7 +33,10 @@ Stop the app containers:
 bash ./bin/stop.sh
 ```
 
-The service is available at `http://localhost:9090/` by default. The host port
-can be changed with `LD_HOST_PORT` in `.env`.
+### Customising
 
-The setup follows the [official linkding Docker installation](https://linkding.link/installation/#using-docker).
+Optional app-level customisations are stored in the [custom](custom/) directory.
+
+### Infrastructure and Deployment
+
+Refer to [docs/INFRA.md](docs/INFRA.md).
